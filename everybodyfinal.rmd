@@ -1,0 +1,49 @@
+---
+title: "everybodyfinal.rmd"
+author: "Monserrat G"
+date: "May 16, 2019"
+output: html_document
+---
+
+```{r include=FALSE,echo=FALSE}
+require(tidyverse)
+require(tigerstats)
+avast <-read.csv(file="avastivironal.csv",header=TRUE)
+```
+
+# Introduction
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?.  If you skimp in this section expect to be marked down in your grade. Paint a picture of the project a couple of paragraphs is expected!-->
+
+A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this!
+
+# Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
+The methods use for this was chi-square and fisher test. We're going to look at the bar plots and compare to see if they are different visually then look at the results numerically. 
+
+```{r}
+results <- avast
+trialtbl=xtabs(~infected+treatment,data=results)
+```
+
+```{r}
+barchartGC(~infected+treatment, data=results, type="percent")
+```
+
+```{r}
+colPerc(trialtbl)
+rowPerc(trialtbl)
+```
+
+```{r}
+chisqtestGC(trialtbl, graph = TRUE)
+```
+
+```{r}
+fisher.test(trialtbl)
+```
+
+
+## Conclusions
+Based on the results of both the chi-square test and the fishers test the placebo is working for this group so we will eject the null hypothesis because the odds of 1 is far from being there. The test we used was to see if the odds of getting aids was a 1:1 ratio and it was far from it. 
